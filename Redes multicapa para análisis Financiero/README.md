@@ -23,3 +23,24 @@ El elemento central del análisis es la creación de un Minimum Spanning Tree o 
 Finalmente visualiza el árbol resultante usando un layout de resorte que posiciona los nodos de manera estéticamente agradable Los nodos representan los diferentes índices y las aristas muestran las conexiones más importantes con sus respectivos pesos de distancia
 
 Esta metodología es útil para entender cómo se propagan las crisis financieras identificar grupos de mercados que se mueven juntos y detectar los índices que actúan como conectores principales en el sistema financiero global
+
+
+
+### CÓDIGO 2
+
+
+Este código implementa un análisis comparativo de redes financieras entre dos períodos económicos distintos para estudiar cómo cambian las estructuras de correlación entre índices bursátiles durante diferentes contextos de mercado
+
+Primero define dos ventanas temporales específicas El primer período abarca desde marzo de 2020 hasta marzo de 2021 capturando el impacto inicial de la pandemia de COVID-19 y la respuesta de los mercados financieros El segundo período comprende todo el año 2022 caracterizado por el endurecimiento de la política monetaria y el aumento de las tasas de interés
+
+La función build_mst encapsula todo el proceso de construcción del árbol de expansión mínima que vimos en el código anterior Toma como entrada los retornos logarítmicos de un período específico calcula la matriz de correlación la convierte en matriz de distancias construye un grafo completo y finalmente extrae el MST Esta modularización permite aplicar el mismo análisis a diferentes ventanas temporales de manera eficiente
+
+La función plot_mst se encarga de la visualización creando gráficos comparables entre períodos usando la misma semilla para el layout de resorte lo que garantiza posiciones consistentes de los nodos entre visualizaciones La función muestra las etiquetas de peso en las aristas permitiendo comparar directamente las distancias de correlación entre períodos
+
+El código construye y visualiza dos MST separados uno para cada período permitiendo identificar visualmente cómo cambia la estructura de conectividad entre los índices financieros durante diferentes regímenes de mercado
+
+La función network_metrics calcula métricas topológicas importantes para caracterizar cuantitativamente las redes El grado promedio indica qué tan conectados están los nodos la densidad mide la proporción de conexiones existentes versus posibles el coeficiente de clustering promedio evalúa la tendencia a formar grupos el camino más corto promedio mide la eficiencia de la red la correlación promedio proporciona el nivel general de sincronización entre mercados y el diámetro indica la máxima separación entre cualquier par de nodos
+
+Finalmente construye un DataFrame comparativo que permite evaluar cuantitativamente las diferencias estructurales entre ambos períodos Esta comparación revela cómo eventos económicos globales como pandemias o cambios en política monetaria afectan la arquitectura de las relaciones entre mercados financieros internacionales
+
+Este enfoque temporal permite identificar si los mercados se vuelven más o menos interconectados durante crisis entender cómo se reorganizan las relaciones de dependencia y detectar cambios en los patrones de contagio financiero entre diferentes regímenes económicos
