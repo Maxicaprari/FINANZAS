@@ -44,3 +44,27 @@ La función network_metrics calcula métricas topológicas importantes para cara
 Finalmente construye un DataFrame comparativo que permite evaluar cuantitativamente las diferencias estructurales entre ambos períodos Esta comparación revela cómo eventos económicos globales como pandemias o cambios en política monetaria afectan la arquitectura de las relaciones entre mercados financieros internacionales
 
 Este enfoque temporal permite identificar si los mercados se vuelven más o menos interconectados durante crisis entender cómo se reorganizan las relaciones de dependencia y detectar cambios en los patrones de contagio financiero entre diferentes regímenes económicos
+
+
+
+### CASO ARGENTINO
+
+Este código implementa un sistema de alerta temprana para crisis financieras en el mercado argentino utilizando análisis de redes temporales y machine learning supervisado aplicado específicamente al contexto económico de Argentina
+
+Primero define un universo de activos estratégicamente seleccionado que incluye las principales acciones argentinas cotizadas como ADRs en mercados internacionales como Grupo Galicia YPF Pampa Energía Banco Macro y MercadoLibre También incorpora índices de referencia como el MERVAL el S&P 500 y el ETF de Brasil para capturar conexiones regionales e internacionales
+
+Incluye commodities fundamentales para la economía argentina como soja maíz petróleo y oro que reflejan la estructura exportadora del país basada en productos primarios Además integra indicadores de riesgo global como la tasa del bono del tesoro estadounidense a 10 años para medir el costo del dinero internacional
+
+El código descarga datos históricos desde 2018 hasta 2025 y construye un MST estático que revela la estructura general de correlaciones entre todos estos activos durante el período completo Esta visualización permite identificar qué activos actúan como conectores principales en el ecosistema financiero argentino
+
+La innovación principal radica en el análisis temporal mediante ventanas deslizantes de 60 días que se mueven cada 5 días extrayendo métricas topológicas como grado promedio densidad coeficiente de clustering y camino más corto promedio Esta aproximación captura la evolución dinámica de las interconexiones del mercado
+
+Define una variable objetivo de crisis basada en retornos futuros del índice MERVAL estableciendo como crisis períodos donde el retorno acumulado a 60 días sea inferior al menos 10 por ciento Esta definición permite entrenar un modelo predictivo que anticipe períodos de estrés financiero
+
+Utiliza un clasificador RandomForest con balanceamiento de clases para predecir crisis futuras basándose únicamente en las métricas de red actuales La hipótesis subyacente es que cambios en la estructura topológica de correlaciones preceden a las crisis financieras
+
+El sistema genera tres visualizaciones clave La red MST estática muestra la arquitectura general de conexiones La evolución temporal de métricas revela cómo cambian las propiedades de red antes durante y después de las crisis sombreando los períodos identificados como críticos La importancia de características indica qué métricas topológicas son más predictivas para anticipar crisis
+
+Esta metodología combina teoría de grafos análisis de series temporales financieras y machine learning supervisado para crear un sistema de monitoreo que puede alertar sobre inestabilidad sistémica inminente en el mercado argentino considerando tanto factores domésticos como internacionales
+
+El enfoque es particularmente relevante para economías emergentes como Argentina que enfrentan volatilidad recurrente y donde la detección temprana de crisis puede ser crucial para la toma de decisiones de inversión y política económica
