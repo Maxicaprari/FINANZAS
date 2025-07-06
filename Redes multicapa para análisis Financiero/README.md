@@ -26,7 +26,7 @@ Esta metodología es útil para entender cómo se propagan las crisis financiera
 
 
 
-### CÓDIGO 2
+### Dos_períodos.py
 
 
 Este código implementa un análisis comparativo de redes financieras entre dos períodos económicos distintos para estudiar cómo cambian las estructuras de correlación entre índices bursátiles durante diferentes contextos de mercado
