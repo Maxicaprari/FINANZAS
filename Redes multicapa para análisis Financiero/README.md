@@ -1,4 +1,4 @@
-### Anáisis de Crisis Financieras mediante Redes Multicapa Supervisadas
+### Análisis Comparativo de Estructuras de Correlación Financiera mediante Árboles de Expansión Mínima: Estudio de Dos Períodos de Crisis
 ## Máximo Caprari
 
 
