@@ -68,3 +68,29 @@ El sistema genera tres visualizaciones clave La red MST estática muestra la arq
 Esta metodología combina teoría de grafos análisis de series temporales financieras y machine learning supervisado para crear un sistema de monitoreo que puede alertar sobre inestabilidad sistémica inminente en el mercado argentino considerando tanto factores domésticos como internacionales
 
 El enfoque es particularmente relevante para economías emergentes como Argentina que enfrentan volatilidad recurrente y donde la detección temprana de crisis puede ser crucial para la toma de decisiones de inversión y política económica
+
+
+### EVALUACIÓN
+
+Este código implementa un sistema completo de evaluación temporal para modelos de predicción de crisis financieras, diseñado específicamente para analizar la estabilidad y robustez del rendimiento predictivo a lo largo del tiempo mediante técnicas de validación deslizante.
+
+La función principal evaluate_temporal_performance aplica una metodología de walk-forward analysis utilizando ventanas deslizantes de 50 observaciones que se mueven cada 10 períodos, manteniendo un conjunto de entrenamiento mínimo de 60 observaciones. Esta aproximación simula condiciones realistas de trading donde el modelo debe adaptarse continuamente a nuevos datos sin conocimiento del futuro.
+
+El código prepara los datos aplicando filtrado de características con alta disponibilidad (menos del 50% de valores faltantes), imputación mediante media móvil y normalización estándar usando StandardScaler. Utiliza GradientBoostingClassifier con 50 estimadores como modelo base, optimizado para balancear velocidad de entrenamiento y capacidad predictiva en evaluaciones repetitivas.
+
+Para cada ventana temporal, calcula un conjunto completo de métricas de classification: AUC-ROC como medida principal de discriminación, accuracy para rendimiento general, precision y recall para evaluar la detección de crisis verdaderas versus falsas alarmas, y F1-score como balance armónico entre precision y recall. Incluye manejo robusto de casos edge como ausencia de crisis en períodos de prueba.
+
+Genera cuatro visualizaciones principales organizadas en una matriz 2x2: evolución temporal del AUC con línea de referencia en 0.5 para comparar contra clasificación aleatoria, trayectoria de accuracy a lo largo del tiempo, evolución conjunta de precision y recall para evaluar trade-offs, y un gráfico dual que combina F1-score con barras indicando número de crisis detectadas por período.
+
+Proporciona estadísticas comprehensivas de resumen incluyendo medias y desviaciones estándar de todas las métricas, identificación de valores máximos y mínimos, conteo total de crisis detectadas y análisis de correlaciones entre métricas para evaluar consistencia del modelo.
+
+Implementa análisis de estabilidad mediante desviación estándar móvil del AUC en ventanas de 5 períodos, identificación automática de períodos de alta performance (AUC > 0.7), y matriz de correlaciones entre métricas para detectar comportamientos anómalos o degradación del modelo.
+
+Incluye visualizaciones adicionales con histograma de distribución de AUC scores para identificar sesgos o multimodalidad en el rendimiento, y box plots comparativos de todas las métricas para visualizar dispersión, outliers y consistencia relativa entre diferentes medidas de performance.
+
+Esta metodología es fundamental para validar la aplicabilidad práctica de modelos de predicción financiera, especialmente en mercados emergentes donde la no-estacionariedad y cambios estructurales pueden degradar rápidamente la performance predictiva. El análisis temporal permite identificar períodos de mayor confiabilidad del modelo y ajustar estrategias de trading en consecuencia.
+
+El enfoque de evaluación rolling es particularmente relevante para sistemas de alerta temprana donde la precisión temporal es crucial, permitiendo cuantificar no solo si el modelo funciona en promedio, sino cuándo y bajo qué condiciones de mercado mantiene su capacidad predictiva de manera más consistente.
+
+
+
