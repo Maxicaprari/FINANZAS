@@ -1,77 +1,39 @@
 # Simulación Monte Carlo del CCL con Bandas Móviles
 
-Este proyecto implementa una simulación de Monte Carlo para proyectar la evolución del **Contado con Liquidación (CCL)** a partir de datos históricos obtenidos desde **Alphacast**, incorporando un análisis de riesgo basado en **bandas móviles de intervención** y métricas estadísticas financieras.
+Este repositorio contiene un script que proyecta la evolución del **Contado con Liquidación (CCL)** mediante simulaciones de Monte Carlo. El modelo parte de la serie histórica provista por **Alphacast**, incorpora un corredor cambiario que se ajusta día a día (*crawling peg*) y calcula varias métricas de riesgo financiero.
 
-## Requisitos
+## Requisitos de software
 
-- Python 3.8 o superior
-- Paquetes:
-  - `alphacast`
-  - `pandas`
-  - `numpy`
-  - `matplotlib`
-  - `seaborn`
-
-### Instalación
+El código se ejecuta en Python 3.8 o superior y utiliza las librerías `alphacast`, `pandas`, `numpy`, `matplotlib` y `seaborn`.
 
 ```bash
 pip install alphacast pandas numpy matplotlib seaborn
+```
 
-## Descripción del código
+## Flujo de trabajo
 
-### Extracción de datos históricos
+### Descarga y depuración de datos  
+La aplicación se conecta a la API de Alphacast y recupera la serie “CCL promedio ADRs” (dataset ID 42438). A continuación convierte la columna de fechas al tipo adecuado y descarta los registros anteriores al 1 de enero de 2025.
 
-Se conecta a la API de Alphacast para descargar la serie de tiempo del CCL promedio (dataset ID: 42438).
+### Simulación de trayectorias  
+A partir de los rendimientos logarítmicos del CCL se calcula la volatilidad diaria. Con esa varianza se generan mil caminos de trescientos días por medio de un movimiento browniano acumulativo.
 
-Se filtran los datos a partir del 1 de enero de 2025.
+### Bandas móviles de intervención  
+El corredor comienza el 11 de abril de 2025 con un piso de 1 000 ARS/USD y un techo de 1 400 ARS/USD. Ambos niveles se ajustan cada jornada mediante un factor exponencial que equivale a una tasa efectiva mensual del uno por ciento.
 
-### Parámetros de simulación
+### Detección de rupturas  
+El programa comprueba, para cada trayectoria, si el CCL supera la banda superior o perfora la inferior y registra la primera fecha y la magnitud de esa salida.
 
-Se calcula la volatilidad diaria del CCL a partir de diferencias logarítmicas.
+### Visualizaciones generadas  
+Se muestran la serie histórica depurada, la evolución de las bandas, un subconjunto representativo de trayectorias simuladas, los puntos de ruptura y el histograma de los valores de cierre al día 300 con el VaR y el CVaR al 95 %.
 
-Se simulan 1000 trayectorias de 300 días utilizando movimientos brownianos acumulativos.
+### Métricas calculadas  
+El informe incluye la probabilidad de ruptura del corredor, el tiempo medio hasta la primera salida, el número de rupturas por arriba y por abajo, las estadísticas de los precios finales (media, desviación estándar, percentiles 10, 50 y 90), el VaR y el CVaR al 95 %, así como el retorno anualizado, la volatilidad anualizada y el drawdown máximo promedio.
 
-### Bandas móviles de intervención
+## Interpretación de resultados
 
-Inician el 11 de abril de 2025.
+El modelo permite estimar la probabilidad de que el CCL abandone un corredor móvil bajo un esquema de volatilidad histórica constante. Sirve para realizar pruebas de estrés, evaluar el riesgo cambiario y explorar escenarios extremos.
 
-Valores iniciales:
-- Banda inferior: 1000 ARS/USD
-- Banda superior: 1400 ARS/USD
+---
 
-Ajuste diario equivalente a una tasa del 1 % mensual en términos de TEA.
-
-Las bandas se ajustan exponencialmente día a día.
-
-### Detección de salidas
-
-Se detecta si cada simulación supera la banda superior o cae por debajo de la banda inferior.
-
-Se registra el momento de salida y la magnitud para cada trayectoria.
-
-### Visualizaciones
-
-- Gráfico de evolución histórica del CCL.
-- Gráfico de bandas móviles.
-- Trayectorias simuladas.
-- Puntos de salida de banda.
-- Histograma de valores finales del CCL al día 300 con VaR y CVaR al 95 %.
-
-### Métricas estadísticas
-
-- Probabilidad de salida de banda.
-- Tiempo promedio hasta la primera salida.
-- Cantidad de salidas superiores e inferiores.
-- Estadísticas del valor final del CCL:
-  - Media, desviación estándar, percentiles 10, 50 y 90.
-- Medidas de riesgo:
-  - VaR (Value-at-Risk) al 95 %
-  - CVaR (Conditional VaR) al 95 %
-- Indicadores financieros:
-  - Retorno anualizado
-  - Volatilidad anualizada
-  - Drawdown máximo promedio
-
-## Interpretación
-
-Este modelo permite estimar el riesgo de que el CCL cruce bandas de intervención simuladas bajo un escenario de caminata aleatoria con volatilidad histórica constante. La herramienta es útil para análisis de stress financiero, evaluación de riesgo cambiario y simulación de escenarios extremos.
+Autor: **@MaximoCaprari**
