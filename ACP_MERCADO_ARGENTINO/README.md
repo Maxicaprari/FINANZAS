@@ -35,7 +35,7 @@ El objetivo es identificar patrones comunes entre acciones, índices, commoditie
 
 El proyecto utiliza las siguientes librerías de Python:
 
-```bash
+
 pip install numpy pandas matplotlib seaborn networkx scikit-learn yfinance scipy
 
 
