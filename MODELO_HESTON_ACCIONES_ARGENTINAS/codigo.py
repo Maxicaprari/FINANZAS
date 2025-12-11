@@ -45,9 +45,7 @@ def estimar_varianza_garch(retornos):
     except:
         return None
 
-# ---------------------------------------------------------
-# 3. CALIBRACIÓN DEL MODELO DE HESTON (MEJORADA)
-# ---------------------------------------------------------
+
 def heston_likelihood(params, retornos, varianza_observada, dt=1/252):
     kappa, theta, xi, rho, v0 = params
 
@@ -88,7 +86,6 @@ def calibrar_heston(retornos, var_obs):
         var_obs[0]                      # v0
     ])
 
-    # Bounds más amplios y realistas
     bounds = [
         (0.5, 15),      # kappa
         (1e-6, 0.5),    # theta
@@ -227,9 +224,8 @@ def graficar_trayectorias_volatilidad(V, T, ticker):
 resultados = []
 
 for ticker in tickers_argentina:
-    print("\n====================================================")
     print(f"Procesando: {ticker}")
-    print("====================================================")
+
 
     precios = descargar_datos(ticker)
     if precios is None:
