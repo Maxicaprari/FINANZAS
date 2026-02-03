@@ -172,7 +172,7 @@ ax1.axhline(0, linestyle='--')
 for rid, info in regime_interpretations.items():
     ax1.axvspan(info['dates'].min(), info['dates'].max(), alpha=0.2, color=info['color'])
 plt.tight_layout()
-plt.savefig('linkedin_1_regimenes_temporales.png', dpi=300)
+plt.savefig('regimenes_temporales.png', dpi=300)
 plt.show()
 
 fig2, axes2 = plt.subplots(2,2,figsize=(18,13))
@@ -188,7 +188,7 @@ axes2[1,0].bar(labels, vols, color=colors)
 for i,(rid,info) in enumerate(regime_interpretations.items()):
     axes2[1,1].plot([i,i],[info['min_growth'],info['max_growth']], color=info['color'], linewidth=6)
 plt.tight_layout()
-plt.savefig('linkedin_2_estadisticos_regimenes.png', dpi=300)
+plt.savefig('estadisticos_regimenes.png', dpi=300)
 plt.show()
 
 fig3, ax3 = plt.subplots(figsize=(18,18))
@@ -210,5 +210,5 @@ for rid,info in regime_interpretations.items():
     nx.draw_networkx_nodes(mst_graph,pos,nodelist=nodes,node_color=[info['color']],ax=ax3)
 ax3.axis('off')
 plt.tight_layout()
-plt.savefig('linkedin_3_mst_network.png', dpi=300)
+plt.savefig('mst_network.png', dpi=300)
 plt.show()
